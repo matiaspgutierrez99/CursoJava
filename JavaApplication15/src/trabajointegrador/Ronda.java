@@ -33,6 +33,7 @@ public class Ronda {
     }
     
     //metodos
+    //Agrega objeto Partido al vector.
     public void addPartido(Partido part) {
         if (numPartidos < partidos.length) {
             partidos[numPartidos] = part;
