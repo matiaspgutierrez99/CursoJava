@@ -13,8 +13,9 @@ public class TrabajoIntegrador {
     }
     
     public static void main(String[] args) {
-        String csvResultados = "../resultados.csv";
-        String csvPronostico = "../pronostico.csv";
+        //String csvResultados = "../resultados.csv";
+        //Hola
+        //String csvPronostico = "../pronostico.csv";
         
     }
     
