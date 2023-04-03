@@ -10,6 +10,9 @@ public class Partido {
     private resultadoEnum result;
     
     //Constructor
+    public Partido() {
+        resultadoEnum result = new resultadoEnum();
+    }
     public Partido(String equipo1,String equipo2,int golesE1,int golesE2) {
         this.equipo1 = equipo1;
         this.equipo2 = equipo2;

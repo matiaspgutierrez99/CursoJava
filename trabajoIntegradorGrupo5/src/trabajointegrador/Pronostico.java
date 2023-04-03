@@ -6,27 +6,35 @@ public class Pronostico {
     private resultadoEnum resultado;
     
     
-    public Pronostico(Partido partido){
+    public Pronostico(){
+        this.equipo="";
+    }
+    
+    
+    public void setPartido(Partido partido){
         this.partido = partido;
-        this.equipo = "";
     }
 
+    public void setResultado(resultadoEnum resultado) {
+        this.resultado = resultado;
+    }
+    
+    public void imprimirPronostico(){
+        if(this.equipo.equals("")){
+            System.out.println("Elegio Empate");
+        }else{
+            System.out.println("Equipo ganador"+this.equipo);
+        }
+           
+    }
+    
     public String getEquipoGanador() {
         return equipo;
     }
 
     public void setEquipoGanador(String equipo) {
         this.equipo = equipo;
-        this.resultado.setGanador(equipo);
-        if (equipo.equals(partido.getEquipo1())){
-            this.resultado.setPerdedor(partido.getEquipo2());
-        }else{
-            this.resultado.setPerdedor(partido.getEquipo1());
-        }
     }
    
-    public void elegirEmpate(){
-        this.resultado.setEmpate(true);
-    }
 }
 
