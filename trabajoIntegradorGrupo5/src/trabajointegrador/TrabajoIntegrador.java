@@ -174,7 +174,7 @@ public class TrabajoIntegrador {
         
             ronda.imprimirPartidos();
             
-            Pronostico[] persona = TrabajoIntegrador.generarPersona("../pronostico.csv", ronda.getVectorLength());
+            Pronostico[] persona = TrabajoIntegrador.generarPersona(rutaPronosticos, ronda.getVectorLength());
             
             imprimirPersona(persona);
         }
