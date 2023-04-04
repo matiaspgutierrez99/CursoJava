@@ -36,6 +36,9 @@ public class Ronda {
         return partidos.length;
     }
     
+    public Partido getPartido(int i){
+        return partidos[i];
+    }
     
     public void imprimirPartidos(){
         for(Partido partido : partidos){

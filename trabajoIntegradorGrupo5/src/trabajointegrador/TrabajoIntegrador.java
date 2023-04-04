@@ -58,6 +58,26 @@ public class TrabajoIntegrador {
                 partido.setGolesEquipo2(Integer.parseInt(fields[2]));
                 partido.setEquipo2(fields[3]);
                 
+                resultadoEnum resultadoLocal = new resultadoEnum();
+                
+                if(partido.getGolesEquipo1() > partido.getGolesEquipo2()){
+                    resultadoLocal.setGanador(partido.getEquipo1());
+                    resultadoLocal.setPerdedor(partido.getEquipo2());
+                }else{
+                    if(partido.getGolesEquipo1() < partido.getGolesEquipo2()){
+                        resultadoLocal.setGanador(partido.getEquipo2());
+                        resultadoLocal.setPerdedor(partido.getEquipo1());
+                    }else{
+                        if(partido.getGolesEquipo1() == partido.getGolesEquipo2()){
+                            resultadoLocal.setEmpate(true);
+                        }
+                    }
+                }
+                
+                partido.setResult(resultadoLocal);
+                
+                //Agrego partido a la ronda
+                
                 ronda.addPartido(partido);
             }
         }catch(IOException e){ //Atrapa la exception por si ocurre un error con el csv.
@@ -162,6 +182,28 @@ public class TrabajoIntegrador {
     
     }
     
+    public static int contarPuntos(Pronostico[]persona,Ronda ronda,int puntos){
+        resultadoEnum resultLocal;
+        for(int i=0;i<persona.length;i++){
+            //Genera un resultado para poder comparar con el pronostico
+            resultLocal = ronda.getPartido(i).getResultado();
+            //Agarro persona y comparo empate
+            
+            if(persona[i].getResultado().isEmpate() == false){
+                //Si no hubo empate comparo el ganador  
+                if(persona[i].getEquipoGanador() == resultLocal.getGanador()){
+                    //Si la prediccion es igual al resultado real se suma 1 punto
+                    puntos = puntos + 1;
+                }
+            }else{
+                if(persona[i].getResultado().isEmpate() == resultLocal.isEmpate()){
+                    puntos = puntos + 1;
+                }
+            }
+        }
+        return puntos;
+    }
+    
     public static void main(String[] args) {
         //HAY QUE IMPLEMENTAR LO DE LAS RUTAS GLOBALES YA QUE ESTA ES DE PRUEBA PARA VER SI FUNCIONABA
         String rutaResultados = "../resultados.csv";
@@ -177,9 +219,15 @@ public class TrabajoIntegrador {
             Pronostico[] persona = TrabajoIntegrador.generarPersona(rutaPronosticos, ronda.getVectorLength());
             
             imprimirPersona(persona);
+            
+            int puntos = 0;
+            
+            puntos = TrabajoIntegrador.contarPuntos(persona, ronda, puntos);
+            
+            System.out.println("Puntos: "+ puntos);
         }
         //Crear persona , despues hay q pasarlo a un objeto para la segunda entrega
-        
+            
         
         
         

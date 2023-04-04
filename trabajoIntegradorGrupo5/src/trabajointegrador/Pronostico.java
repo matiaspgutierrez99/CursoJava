@@ -15,13 +15,17 @@ public class Pronostico {
         this.partido = partido;
     }
 
+    public resultadoEnum getResultado() {
+        return resultado;
+    }
+
     public void setResultado(resultadoEnum resultado) {
         this.resultado = resultado;
     }
     
     public void imprimirPronostico(){
         if(this.equipo.equals("")){
-            System.out.println("Elegio Empate");
+            System.out.println("Eligio Empate");
         }else{
             System.out.println("Equipo ganador"+this.equipo);
         }
