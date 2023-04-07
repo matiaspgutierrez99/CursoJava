@@ -1,6 +1,4 @@
-
-package trabajointegrador;
-
+package com.mycompany.trabajointegrador;
 
 public class Partido {
     private String equipo1;
@@ -8,6 +6,11 @@ public class Partido {
     private int golesEquipo1;
     private int golesEquipo2;
     private resultadoEnum result;
+    
+    //Constructor vacio
+    public Partido() {
+        
+    }
     
     //Constructor
     public Partido(String equipo1,String equipo2,int golesE1,int golesE2) {
@@ -51,22 +54,13 @@ public class Partido {
     public void setGolesEquipo2(int golesEquipo2) {
         this.golesEquipo2 = golesEquipo2;
     }
+
+    public void setResult(resultadoEnum result) {
+        this.result = result;
+    }
     
-    //metodos
-    public void resultado(){
-        if(this.golesEquipo1 > this.golesEquipo2){
-            this.result.setGanador(this.equipo1);
-            this.result.setPerdedor(this.equipo2);
-        }else{
-            if(this.golesEquipo1 < this.golesEquipo2){
-                this.result.setGanador(this.equipo2);
-                this.result.setPerdedor(this.equipo1);
-            }else{
-                if(this.golesEquipo1 == this.golesEquipo2){
-                    this.result.setEmpate(true);
-                }
-            }
-        }
+    public resultadoEnum getResultado(){
+        return result;
     }
     
 }
