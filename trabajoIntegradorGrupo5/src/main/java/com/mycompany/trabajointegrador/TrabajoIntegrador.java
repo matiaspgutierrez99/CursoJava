@@ -1,4 +1,5 @@
-package trabajointegrador;
+package com.mycompany.trabajointegrador;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,7 +37,7 @@ public class TrabajoIntegrador {
     
     public static void leerPartidosDeCSV(String ruta,Ronda ronda){
         String csvFile = ruta;
-        String csvDelimiter = ";";
+        String csvDelimiter = ",";
         String [] expectativaHeader = {"Equipo1","Goles1","Goles2","Equipo2"};
         
         try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
@@ -50,13 +51,12 @@ public class TrabajoIntegrador {
             String linea;
             while((linea  = br.readLine()) != null){
                 String[]fields = linea.split(csvDelimiter);
-                int numero = fields.length;
-                System.out.println("TAMAÑO: "+numero);
+
                 //Crear y llenar el objeto partido
                 Partido partido = new Partido();
                 partido.setEquipo1(fields[0]);
-                partido.setGolesEquipo1(Integer.parseInt(fields[1]));
-                partido.setGolesEquipo2(Integer.parseInt(fields[2]));
+                partido.setGolesEquipo1(Integer.parseInt(fields[1].trim()));
+                partido.setGolesEquipo2(Integer.parseInt(fields[2].trim()));
                 partido.setEquipo2(fields[3]);
                 
                 resultadoEnum resultadoLocal = new resultadoEnum();
@@ -89,7 +89,7 @@ public class TrabajoIntegrador {
     
     public static Ronda generarRonda(String ruta){
         String csvFile = ruta;
-        String csvDelimiter = ";";
+        String csvDelimiter = ",";
         String [] expectativaHeader = {"Equipo1","Goles1","Goles2","Equipo2"};
         Ronda ronda = null;
         
@@ -121,7 +121,7 @@ public class TrabajoIntegrador {
     public static Pronostico[] generarPersona(String ruta,int numLineas){
    
         String csvFile = ruta;
-        String csvDelimiter = ";";
+        String csvDelimiter = ",";
         String [] expectativaHeader = {"Equipo1","Gana1","Empata","Gana2","Equipo2"};
         //Creo persona
         Pronostico [] persona;
@@ -136,22 +136,22 @@ public class TrabajoIntegrador {
             }
             while((linea  = br.readLine()) != null){
                 String[]fields = linea.split(csvDelimiter);
-                
+
                 //Crear y llenar el objeto pronostico
                 
                 Pronostico pronostico = new Pronostico();
                 resultadoEnum resultado = new resultadoEnum();
                 
                 //
-                if(fields[1].equals("TRUE")){
+                if(fields[1].equals("true")){
                     pronostico.setEquipoGanador(fields[0]);
                     resultado.setGanador(fields[0]);
                     resultado.setPerdedor(fields[4]);
                 }else{
-                    if(fields[2].equals("TRUE")){
+                    if(fields[2].equals("true")){
                         resultado.setEmpate(true);
                     }else{
-                        if(fields[3].equals("TRUE")){
+                        if(fields[3].equals("true")){
                             pronostico.setEquipoGanador(fields[4]);
                             resultado.setGanador(fields[4]);
                             resultado.setPerdedor(fields[0]);
@@ -164,10 +164,7 @@ public class TrabajoIntegrador {
                 pronostico.setResultado(resultado);
                 
                 persona[i] = pronostico;
-                System.out.println("PERSONA " + i + " : ");
-                System.out.println("GANADOR: " + persona[i].getResultado().getGanador());
-                System.out.println("PERDEDOR: " + persona[i].getResultado().getPerdedor());
-                System.out.println("ES EMPATE: " + persona[i].getResultado().isEmpate());
+    
                 i++;
             }
            
@@ -212,11 +209,12 @@ public class TrabajoIntegrador {
     public static void main(String[] args) {
         //HAY QUE IMPLEMENTAR LO DE LAS RUTAS GLOBALES YA QUE ESTA ES DE PRUEBA PARA VER SI FUNCIONABA
         String rutaResultados = "../resultados.csv";
+        
         String rutaPronosticos = "../pronostico.csv";
         TrabajoIntegrador.leerArchivo(rutaResultados);
         
         Ronda ronda = TrabajoIntegrador.generarRonda(rutaResultados);
-        System.out.println(ronda.getVectorLength());
+
         if (ronda != null){     
             TrabajoIntegrador.leerPartidosDeCSV(rutaResultados, ronda);
         

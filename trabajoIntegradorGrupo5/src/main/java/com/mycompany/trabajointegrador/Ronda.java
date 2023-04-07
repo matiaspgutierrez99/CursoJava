@@ -1,5 +1,4 @@
-
-package trabajointegrador;
+package com.mycompany.trabajointegrador;
 
 public class Ronda {
     private String nro;

@@ -1,4 +1,4 @@
-package trabajointegrador;
+package com.mycompany.trabajointegrador;
 
 public class Pronostico {
     private Partido partido;
@@ -27,7 +27,7 @@ public class Pronostico {
         if(this.equipo.equals("")){
             System.out.println("Eligio Empate");
         }else{
-            System.out.println("Equipo ganador"+this.equipo);
+            System.out.println("Equipo ganador: "+this.equipo);
         }
            
     }
@@ -41,4 +41,3 @@ public class Pronostico {
     }
    
 }
-
