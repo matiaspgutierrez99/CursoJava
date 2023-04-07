@@ -50,7 +50,8 @@ public class TrabajoIntegrador {
             String linea;
             while((linea  = br.readLine()) != null){
                 String[]fields = linea.split(csvDelimiter);
-                
+                int numero = fields.length;
+                System.out.println("TAMAÑO: "+numero);
                 //Crear y llenar el objeto partido
                 Partido partido = new Partido();
                 partido.setEquipo1(fields[0]);
@@ -163,6 +164,10 @@ public class TrabajoIntegrador {
                 pronostico.setResultado(resultado);
                 
                 persona[i] = pronostico;
+                System.out.println("PERSONA " + i + " : ");
+                System.out.println("GANADOR: " + persona[i].getResultado().getGanador());
+                System.out.println("PERDEDOR: " + persona[i].getResultado().getPerdedor());
+                System.out.println("ES EMPATE: " + persona[i].getResultado().isEmpate());
                 i++;
             }
            
@@ -211,6 +216,7 @@ public class TrabajoIntegrador {
         TrabajoIntegrador.leerArchivo(rutaResultados);
         
         Ronda ronda = TrabajoIntegrador.generarRonda(rutaResultados);
+        System.out.println(ronda.getVectorLength());
         if (ronda != null){     
             TrabajoIntegrador.leerPartidosDeCSV(rutaResultados, ronda);
         

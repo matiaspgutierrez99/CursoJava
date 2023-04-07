@@ -42,7 +42,7 @@ public class Ronda {
     
     public void imprimirPartidos(){
         for(Partido partido : partidos){
-            System.out.println("Equipo 1: " + partido.getEquipo1() + "Equipo 2: " + partido.getEquipo2() + "Goles 1: " + partido.getGolesEquipo1() + "Goles 2: " + partido.getGolesEquipo2() );
+            System.out.println("Equipo 1: " + partido.getEquipo1() + " Equipo 2: " + partido.getEquipo2() + " Goles 1: " + partido.getGolesEquipo1() + " Goles 2: " + partido.getGolesEquipo2() );
         }
     }
     
