@@ -37,7 +37,7 @@ public class TrabajoIntegrador {
     
     public static void leerPartidosDeCSV(String ruta,Ronda ronda){
         String csvFile = ruta;
-        String csvDelimiter = ",";
+        String csvDelimiter = ";";
         String [] expectativaHeader = {"Equipo1","Goles1","Goles2","Equipo2"};
         
         try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
@@ -89,7 +89,7 @@ public class TrabajoIntegrador {
     
     public static Ronda generarRonda(String ruta){
         String csvFile = ruta;
-        String csvDelimiter = ",";
+        String csvDelimiter = ";";
         String [] expectativaHeader = {"Equipo1","Goles1","Goles2","Equipo2"};
         Ronda ronda = null;
         
@@ -121,7 +121,7 @@ public class TrabajoIntegrador {
     public static Pronostico[] generarPersona(String ruta,int numLineas){
    
         String csvFile = ruta;
-        String csvDelimiter = ",";
+        String csvDelimiter = ";";
         String [] expectativaHeader = {"Equipo1","Gana1","Empata","Gana2","Equipo2"};
         //Creo persona
         Pronostico [] persona;
@@ -143,15 +143,15 @@ public class TrabajoIntegrador {
                 resultadoEnum resultado = new resultadoEnum();
                 
                 //
-                if(fields[1].equals("true")){
+                if(fields[1].equals("TRUE")){
                     pronostico.setEquipoGanador(fields[0]);
                     resultado.setGanador(fields[0]);
                     resultado.setPerdedor(fields[4]);
                 }else{
-                    if(fields[2].equals("true")){
+                    if(fields[2].equals("TRUE")){
                         resultado.setEmpate(true);
                     }else{
-                        if(fields[3].equals("true")){
+                        if(fields[3].equals("TRUE")){
                             pronostico.setEquipoGanador(fields[4]);
                             resultado.setGanador(fields[4]);
                             resultado.setPerdedor(fields[0]);
