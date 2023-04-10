@@ -1,3 +1,9 @@
-Equipo 1;Gana 1;Empata;Gana 2;Equipo 2
-Argentina;TRUE;FALSE;FALSE;Arabia
-Polonia;FALSE;TRUE;FALSE;Mexico
+Participante;Equipo 1;Gana 1;Empata;Gana 2;Equipo 2
+Mariana;Argentina;TRUE;FALSE;FALSE;Arabia
+;Polonia;FALSE;TRUE;FALSE;Mexico
+;Argentina;TRUE;FALSE;FALSE;Mexico
+;Arabia;FALSE;FALSE;TRUE;Polonia
+Pedro;Argentina;TRUE;FALSE;FALSE;Arabia
+;Polonia;FALSE;FALSE;TRUE;Mexico
+;Argentina;TRUE;FALSE;FALSE;Mexico
+;Arabia;FALSE;TRUE;FALSE;Polonia

@@ -54,10 +54,10 @@ public class TrabajoIntegrador {
 
                 //Crear y llenar el objeto partido
                 Partido partido = new Partido();
-                partido.setEquipo1(fields[0]);
-                partido.setGolesEquipo1(Integer.parseInt(fields[1].trim()));
-                partido.setGolesEquipo2(Integer.parseInt(fields[2].trim()));
-                partido.setEquipo2(fields[3]);
+                partido.setEquipo1(fields[1]);
+                partido.setGolesEquipo1(Integer.parseInt(fields[2].trim()));
+                partido.setGolesEquipo2(Integer.parseInt(fields[3].trim()));
+                partido.setEquipo2(fields[4]);
                 
                 resultadoEnum resultadoLocal = new resultadoEnum();
                 
@@ -144,17 +144,17 @@ public class TrabajoIntegrador {
                 
                 //
                 if(fields[1].equals("TRUE")){
-                    pronostico.setEquipoGanador(fields[0]);
-                    resultado.setGanador(fields[0]);
-                    resultado.setPerdedor(fields[4]);
+                    pronostico.setEquipoGanador(fields[1]);
+                    resultado.setGanador(fields[1]);
+                    resultado.setPerdedor(fields[5]);
                 }else{
                     if(fields[2].equals("TRUE")){
                         resultado.setEmpate(true);
                     }else{
                         if(fields[3].equals("TRUE")){
-                            pronostico.setEquipoGanador(fields[4]);
-                            resultado.setGanador(fields[4]);
-                            resultado.setPerdedor(fields[0]);
+                            pronostico.setEquipoGanador(fields[5]);
+                            resultado.setGanador(fields[5]);
+                            resultado.setPerdedor(fields[1]);
                         }   
                     
                     }
@@ -164,7 +164,7 @@ public class TrabajoIntegrador {
                 pronostico.setResultado(resultado);
                 
                 persona[i] = pronostico;
-    
+
                 i++;
             }
            
