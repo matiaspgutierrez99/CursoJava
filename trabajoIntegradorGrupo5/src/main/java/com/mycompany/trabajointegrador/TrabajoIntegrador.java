@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TrabajoIntegrador {
     private static String linea; //recibe la linea de cada fila
@@ -38,7 +39,7 @@ public class TrabajoIntegrador {
     public static void leerPartidosDeCSV(String ruta,Ronda ronda){
         String csvFile = ruta;
         String csvDelimiter = ";";
-        String [] expectativaHeader = {"Equipo1","Goles1","Goles2","Equipo2"};
+        String [] expectativaHeader = {"Ronda","Equipo1","Goles1","Goles2","Equipo2"};
         
         try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
             //Leo y valido el HEADER del CSV
@@ -90,7 +91,7 @@ public class TrabajoIntegrador {
     public static Ronda generarRonda(String ruta){
         String csvFile = ruta;
         String csvDelimiter = ";";
-        String [] expectativaHeader = {"Equipo1","Goles1","Goles2","Equipo2"};
+        String [] expectativaHeader = {"Ronda","Equipo1","Goles1","Goles2","Equipo2"};
         Ronda ronda = null;
         
         try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
@@ -122,19 +123,19 @@ public class TrabajoIntegrador {
 
         String csvFile = ruta;
         String csvDelimiter = ";";
-        String [] expectativaHeader = {"Equipo1","Gana1","Empata","Gana2","Equipo2"};
+        String [] expectativaHeader = {"Participante","Equipo1","Gana1","Empata","Gana2","Equipo2"};
         //Creo persona
         Pronostico [] persona;
 
         persona = new Pronostico[numLineas];
-
+        int i=0;
         try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
             //Leo y valido el HEADER del CSV
             String[]header = br.readLine().split(csvDelimiter);
             if (header.equals(expectativaHeader)){
                 throw new IllegalArgumentException("El archivo CSV no contiene las columnas que se esperaban");
             }
-            int i=0;
+
             while((linea  = br.readLine()) != null){
                 String[]fields = linea.split(csvDelimiter);
 
@@ -143,25 +144,22 @@ public class TrabajoIntegrador {
                 Pronostico pronostico = new Pronostico();
                 resultadoEnum resultado = new resultadoEnum();
 
-                if(!fields[0].equals("")){
-                    Persona person = new Persona(fields[0]);
-                }else{
-                    if(fields[1].equals("TRUE")){
+                    if(fields[2].equals("TRUE")){
                         pronostico.setEquipoGanador(fields[1]);
                         resultado.setGanador(fields[1]);
                         resultado.setPerdedor(fields[5]);
                     }else{
-                        if(fields[2].equals("TRUE")){
+                        if(fields[3].equals("TRUE")){
                             resultado.setEmpate(true);
                             }else{
-                                if(fields[3].equals("TRUE")){
+                                if(fields[4].equals("TRUE")){
                                     pronostico.setEquipoGanador(fields[5]);
                                     resultado.setGanador(fields[5]);
                                     resultado.setPerdedor(fields[1]);
                         }
                     }
                   }
-                }
+
 
                 pronostico.setResultado(resultado);
 
@@ -193,9 +191,9 @@ public class TrabajoIntegrador {
             resultLocal = ronda.getPartido(i).getResultado();
             //Agarro persona y comparo empate
             
-            if(persona[i].getResultado().isEmpate() == false){
+            if(!persona[i].getResultado().isEmpate()){
                 //Si no hubo empate comparo el ganador  
-                if(persona[i].getEquipoGanador() == resultLocal.getGanador()){
+                if(Objects.equals(persona[i].getEquipoGanador(), resultLocal.getGanador())){
                     //Si la prediccion es igual al resultado real se suma 1 punto
                     puntos = puntos + 1;
                 }
@@ -213,6 +211,7 @@ public class TrabajoIntegrador {
         String rutaResultados = "../resultados.csv";
         
         String rutaPronosticos = "../pronostico.csv";
+
         TrabajoIntegrador.leerArchivo(rutaResultados);
         
         Ronda ronda = TrabajoIntegrador.generarRonda(rutaResultados);

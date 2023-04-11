@@ -11,6 +11,10 @@ public class Persona {
         this.nombre = nombre;
     }
 
+    public Persona(){
+    }
+
+
     public void addPronostico(Pronostico pron){
        pronosticos = new Pronostico[]{pron};
     }
