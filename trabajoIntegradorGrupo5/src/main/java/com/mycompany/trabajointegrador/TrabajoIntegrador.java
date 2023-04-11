@@ -119,50 +119,52 @@ public class TrabajoIntegrador {
     }
     
     public static Pronostico[] generarPersona(String ruta,int numLineas){
-   
+
         String csvFile = ruta;
         String csvDelimiter = ";";
         String [] expectativaHeader = {"Equipo1","Gana1","Empata","Gana2","Equipo2"};
         //Creo persona
         Pronostico [] persona;
-        
+
         persona = new Pronostico[numLineas];
-        int i=0;
+
         try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
             //Leo y valido el HEADER del CSV
             String[]header = br.readLine().split(csvDelimiter);
             if (header.equals(expectativaHeader)){
                 throw new IllegalArgumentException("El archivo CSV no contiene las columnas que se esperaban");
             }
+            int i=0;
             while((linea  = br.readLine()) != null){
                 String[]fields = linea.split(csvDelimiter);
 
                 //Crear y llenar el objeto pronostico
-                
+
                 Pronostico pronostico = new Pronostico();
                 resultadoEnum resultado = new resultadoEnum();
-                
-                //
-                if(fields[1].equals("TRUE")){
-                    pronostico.setEquipoGanador(fields[1]);
-                    resultado.setGanador(fields[1]);
-                    resultado.setPerdedor(fields[5]);
+
+                if(!fields[0].equals("")){
+                    Persona person = new Persona(fields[0]);
                 }else{
-                    if(fields[2].equals("TRUE")){
-                        resultado.setEmpate(true);
+                    if(fields[1].equals("TRUE")){
+                        pronostico.setEquipoGanador(fields[1]);
+                        resultado.setGanador(fields[1]);
+                        resultado.setPerdedor(fields[5]);
                     }else{
-                        if(fields[3].equals("TRUE")){
-                            pronostico.setEquipoGanador(fields[5]);
-                            resultado.setGanador(fields[5]);
-                            resultado.setPerdedor(fields[1]);
-                        }   
-                    
+                        if(fields[2].equals("TRUE")){
+                            resultado.setEmpate(true);
+                            }else{
+                                if(fields[3].equals("TRUE")){
+                                    pronostico.setEquipoGanador(fields[5]);
+                                    resultado.setGanador(fields[5]);
+                                    resultado.setPerdedor(fields[1]);
+                        }
                     }
-                
+                  }
                 }
-                
+
                 pronostico.setResultado(resultado);
-                
+
                 persona[i] = pronostico;
 
                 i++;

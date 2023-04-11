@@ -7,7 +7,8 @@ public class Persona {
 
     private int acertados;
 
-    public Persona(){
+    public Persona(String nombre){
+        this.nombre = nombre;
     }
 
     public void addPronostico(Pronostico pron){
