@@ -1,10 +1,9 @@
 package com.mycompany.trabajointegrador;
 
 public class Ronda {
-    private String nro;
+    private int nro;
     private Partido [] partidos;
     private int numPartidos;
-    private int puntos;
     
     //Constructor
     public Ronda(int maxPartido) {
@@ -14,24 +13,14 @@ public class Ronda {
 
     //Getters y Setters
 
-    public String getNro() {
+    public int getNro() {
         return this.nro;
     }
 
-    public void setNro(String nro) {
+    public void setNro(int nro) {
         this.nro = nro;
     }
-    
-      
-    public int getPuntos() {
-        return this.puntos;
-    }
-    
-    
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
-    }
-    
+
     public int getVectorLength(){
         return partidos.length;
     }

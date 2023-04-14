@@ -45,6 +45,13 @@ public class Persona {
     public Pronostico getPronostico(int i){
         return pronosticos[i];
     }
+    //Imprimir pronosticos
+    public void imprimirPronosticos(){
+        for(int i=0;i<this.pronosticos.length;i++){
+            System.out.println(pronosticos[i].devolverPronostico());
+        }
+    }
+    
     
     //Agregar un pronostico
     public void addPronostico(Pronostico pron){
