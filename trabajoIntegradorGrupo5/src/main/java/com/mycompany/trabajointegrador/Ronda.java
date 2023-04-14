@@ -9,6 +9,7 @@ public class Ronda {
     //Constructor
     public Ronda(int maxPartido) {
         this.partidos = new Partido[maxPartido];
+        this.numPartidos = 0;
     }
 
     //Getters y Setters

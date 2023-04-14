@@ -34,7 +34,52 @@ public class TrabajoIntegrador {
 
         }
     }
-    
+    public static void llenarRondas(String ruta,Ronda[]rondas){
+        String csvFile = ruta;
+        String csvDelimiter = ";";
+        String[] expectativaHeader = {"Ronda","Equipo1","Goles1","Goles2","Equipo2"};
+        try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
+            //Leo y valido el HEADER del CSV
+            String[]header = br.readLine().split(csvDelimiter);
+            if (header.equals(expectativaHeader)){
+                throw new IllegalArgumentException("El archivo CSV no contiene las columnas que se esperaban");
+            }
+            while((linea  = br.readLine()) != null){
+                String[]fields = linea.split(csvDelimiter); 
+                //Creo partido para poder llenarlo con la info del csv
+                Partido partido = new Partido();
+                partido.setEquipo1(fields[1]);
+                partido.setGolesEquipo1(Integer.parseInt(fields[2].trim()));
+                partido.setGolesEquipo2(Integer.parseInt(fields[3].trim()));
+                partido.setEquipo2(fields[4]);
+                //Creo resultadoLocal para poder llenarlo con la info que saque de partido y del csv
+                resultadoEnum resultadoLocal = new resultadoEnum();
+                //Decidir si mandar esto al objeto resultadoEnum
+                if(partido.getGolesEquipo1() > partido.getGolesEquipo2()){
+                    resultadoLocal.setGanador(partido.getEquipo1());
+                    resultadoLocal.setPerdedor(partido.getEquipo2());
+                }else{
+                    if(partido.getGolesEquipo1() < partido.getGolesEquipo2()){
+                        resultadoLocal.setGanador(partido.getEquipo2());
+                        resultadoLocal.setPerdedor(partido.getEquipo1());
+                    }else{
+                        if(partido.getGolesEquipo1() == partido.getGolesEquipo2()){
+                            resultadoLocal.setEmpate(true);
+                        }
+                    }
+                }
+                
+                partido.setResult(resultadoLocal);
+                //Agrego partido a su ronda
+                rondas[(Integer.parseInt(fields[0].trim()))].addPartido(partido);
+            }
+           
+             
+        }catch(IOException e){ //Atrapa la exception por si ocurre un error con el csv.
+            e.printStackTrace();
+        }
+    }
+/* Este modulo funcionaba para una sola ronda
     public static void leerPartidosDeCSV(String ruta,Ronda ronda){
         String csvFile = ruta;
         String csvDelimiter = ";";
@@ -51,7 +96,7 @@ public class TrabajoIntegrador {
             String linea;
             while((linea  = br.readLine()) != null){
                 String[]fields = linea.split(csvDelimiter);
-
+                        
                 //Crear y llenar el objeto partido
                 Partido partido = new Partido();
                 partido.setEquipo1(fields[0]);
@@ -85,8 +130,34 @@ public class TrabajoIntegrador {
             e.printStackTrace();
         }
     }
+ */
+    public static Ronda[] generarRondas(String ruta){
+        String csvFile = ruta;
+        String csvDelimiter = ";";
+        String [] expectativaHeader = {"Ronda","Equipo1","Goles1","Goles2","Equipo2"};
+        int numRondas=0;
+        try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
+            //Leo y valido el HEADER del CSV
+            String[]header = br.readLine().split(csvDelimiter);
+            if (header.equals(expectativaHeader)){
+                throw new IllegalArgumentException("El archivo CSV no contiene las columnas que se esperaban");
+            }
+            while((linea  = br.readLine()) != null){
+                String[]fields = linea.split(csvDelimiter); 
+                numRondas = Integer.parseInt(fields[0].trim());              
+            }
+           
+             
+        }catch(IOException e){ //Atrapa la exception por si ocurre un error con el csv.
+            e.printStackTrace();
+        }
+        //Creo un vector de rondas
+        Ronda [] rondas;
+        rondas = new Ronda[numRondas];
+        return rondas;
+    }
     
-    
+    /*
     public static Ronda generarRonda(String ruta){
         String csvFile = ruta;
         String csvDelimiter = ";";
@@ -113,11 +184,118 @@ public class TrabajoIntegrador {
             
         }catch(IOException e){ //Atrapa la exception por si ocurre un error con el csv.
             e.printStackTrace();
-        }
+        }   
         
         return ronda;
     }
+    */
+    public static int calcularPersonas(String ruta,int numLineas){
+        String csvFile = ruta;
+        String csvDelimiter = ";";
+        String [] expectativaHeader={"Participante","Equipo1","Gana1","Empata","Gana2","Equipo2"};
+        int contador = 0;
+        try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
+            //Leo y valido el HEADER del CSV
+            String[]header = br.readLine().split(csvDelimiter);
+            if (header.equals(expectativaHeader)){
+                throw new IllegalArgumentException("El archivo CSV no contiene las columnas que se esperaban");
+            }
+            
+            //Recorro el csv y cada vez q paso una linea sumo 1 al contador
+            while(br.readLine() != null){
+                contador++;
+            }    
+            
+        }catch(IOException e){ //Atrapa la exception por si ocurre un error con el csv.
+            e.printStackTrace();
+        }
+        //El contador lo divido por el numero de lineas que hay en una ronda
+        contador = contador / numLineas;  
+        return contador;
+    }
     
+    public static Persona[] generarPersonas(String ruta,int numLineas,int numPersonas){
+        String csvFile = ruta;
+        String csvDelimiter = ";";
+        String [] expectativaHeader ={"Participante","Equipo1","Gana1","Empata","Gana2","Equipo2"};
+        //Creo un vector de personas
+        Persona [] personas;
+        personas = new Persona[numPersonas];
+        //Creo una variable donde guardo la persona en la cual esta ahora el csv ubicado
+        String personaActual = "";
+        //Creo un indice para moverme por el vector
+        int i=0;
+        try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
+            //Leo y valido el HEADER del CSV
+            String[]header = br.readLine().split(csvDelimiter);
+            if(header.equals(expectativaHeader)){
+                throw new IllegalArgumentException("El archivo CSV no contiene las columnas que se esperaban");
+            }
+            Persona persona = new Persona(numLineas);
+            while((linea = br.readLine()) != null){
+                String[]fields = linea.split(csvDelimiter);
+                //Busco el nombre del participante y lo ingreso en el objeto
+                if(persona.getNombre().equals("")){
+                    persona.setNombre(fields[0]);
+                    personaActual = fields[0];
+                }
+                //Loopea mientras el csv sea distinto de null y el nombre no haya cambiado
+                if((persona.getNombre().equals(personaActual))){
+                //Creo un objeto basura para llenarlo y despues llenar el objeto real
+                    Pronostico pronostico = new Pronostico();
+                    resultadoEnum resultado = new resultadoEnum();
+                
+                //Analizo el csv y actualizo los valores
+                    if(fields[2].equals("TRUE")){
+                        pronostico.setEquipoGanador(fields[1]);
+                        resultado.setGanador(fields[1]);
+                        resultado.setPerdedor(fields[5]);
+                    }else{
+                        if(fields[3].equals("TRUE")){
+                            resultado.setEmpate(true);
+                        }else{
+                            if(fields[4].equals("TRUE")){
+                                pronostico.setEquipoGanador(fields[5]);
+                                resultado.setGanador(fields[5]);
+                                resultado.setPerdedor(fields[1]);
+                            }
+                        }
+                    }
+                    pronostico.setResultado(resultado);
+                    persona.addPronostico(pronostico);               
+                }else{
+                    personas[i] = persona;
+                    i++; 
+                    persona = new Persona(numLineas);
+                    //Creo un objeto basura para llenarlo y despues llenar el objeto real
+                    Pronostico pronostico = new Pronostico();
+                    resultadoEnum resultado = new resultadoEnum();
+                
+                    //Analizo el csv y actualizo los valores
+                    if(fields[2].equals("TRUE")){
+                        pronostico.setEquipoGanador(fields[1]);
+                        resultado.setGanador(fields[1]);
+                        resultado.setPerdedor(fields[5]);
+                    }else{
+                        if(fields[3].equals("TRUE")){
+                            resultado.setEmpate(true);
+                        }else{
+                            if(fields[4].equals("TRUE")){
+                                pronostico.setEquipoGanador(fields[5]);
+                                resultado.setGanador(fields[5]);
+                                resultado.setPerdedor(fields[1]);
+                            }
+                        }
+                    }
+                }                                
+            }       
+        }catch(IOException e){ //Atrapa la exception por si ocurre un error con el csv.
+            e.printStackTrace();
+        }
+        
+        return personas;
+    }
+   /* GENERADOR DE VECTOR DE PRONOSTICOS AHORA EL VECTOR SE ENCUENTRA DENTRO DE PERSONA Y LA FUNCION PASO A SER UN GENERADOR DE PERSONAS
     public static Pronostico[] generarPersona(String ruta,int numLineas){
    
         String csvFile = ruta;
@@ -138,7 +316,7 @@ public class TrabajoIntegrador {
                 String[]fields = linea.split(csvDelimiter);
 
                 //Crear y llenar el objeto pronostico
-                
+   
                 Pronostico pronostico = new Pronostico();
                 resultadoEnum resultado = new resultadoEnum();
                 
@@ -176,6 +354,7 @@ public class TrabajoIntegrador {
         
         return persona;
     }
+    */
     
     public static void imprimirPersona(Pronostico[]persona){
         for(int i=0;i<persona.length;i++){
@@ -184,6 +363,8 @@ public class TrabajoIntegrador {
     
     }
     
+    
+    /* CONTADOR DE PUNTOS AHORA ESTA EN PERSONA
     public static int contarPuntos(Pronostico[]persona,Ronda ronda,int puntos){
         resultadoEnum resultLocal;
         for(int i=0;i<persona.length;i++){
@@ -205,9 +386,11 @@ public class TrabajoIntegrador {
         }
         return puntos;
     }
-    
+    */
     public static void main(String[] args) {
-        //HAY QUE IMPLEMENTAR LO DE LAS RUTAS GLOBALES YA QUE ESTA ES DE PRUEBA PARA VER SI FUNCIONABA
+        
+        /*HAY QUE MODIFICAR EL MAIN ACORDE A LAS NUEVOS MODULOS Y OBJETOS, FALTA TERMINAR ALGUNOS MODULOS QUE AFECTAN AL OBJETO RONDA
+        
         String rutaResultados = "../resultados.csv";
         
         String rutaPronosticos = "../pronostico.csv";
@@ -229,7 +412,8 @@ public class TrabajoIntegrador {
             puntos = TrabajoIntegrador.contarPuntos(persona, ronda, puntos);
             
             System.out.println("Puntos: "+ puntos);
-        }
+        }*/
+        
         //Crear persona , despues hay q pasarlo a un objeto para la segunda entrega
             
         
