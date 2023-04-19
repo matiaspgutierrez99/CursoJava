@@ -23,13 +23,14 @@ public class Pronostico {
         this.resultado = resultado;
     }
     
-    public void imprimirPronostico(){
+    public String devolverPronostico(){
+        String imp="";
         if(this.equipo.equals("")){
-            System.out.println("Eligio Empate");
+            imp = "Eligio Empate";
         }else{
-            System.out.println("Equipo ganador: "+this.equipo);
+            imp = "Equipo ganador: " + this.equipo;
         }
-           
+        return imp;   
     }
     
     public String getEquipoGanador() {
