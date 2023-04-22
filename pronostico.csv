@@ -1,3 +1,4 @@
+
 Participante,Equipo 1,Gana 1,Empata,Gana 2,Equipo 2
 Mariana,Argentina,TRUE,FALSE,FALSE,Arabia
 Mariana,Polonia,FALSE,TRUE,FALSE,Mexico
@@ -7,3 +8,4 @@ Pedro,Argentina,TRUE,FALSE,FALSE,Arabia
 Pedro,Polonia,FALSE,FALSE,TRUE,Mexico
 Pedro,Argentina,TRUE,FALSE,FALSE,Mexico
 Pedro,Arabia,FALSE,TRUE,FALSE,Polonia
+

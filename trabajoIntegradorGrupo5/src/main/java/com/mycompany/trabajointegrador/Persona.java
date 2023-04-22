@@ -7,7 +7,7 @@ public class Persona {
     private Pronostico [] pronosticos;
     private int acertados;
     private int numPronosticos;
-    
+
     public Persona(int maxPronosticos){
         this.pronosticos = new Pronostico[maxPronosticos];
         this.nombre = "";
@@ -15,7 +15,7 @@ public class Persona {
         this.puntos = 0;
         this.acertados = 0;
     }
-    
+
     //Getters y setters
 
     public String getNombre() {
@@ -41,7 +41,7 @@ public class Persona {
     public void setAcertados(int acertados) {
         this.acertados = acertados;
     }
-    
+
     public Pronostico getPronostico(int i){
         return pronosticos[i];
     }
@@ -51,8 +51,8 @@ public class Persona {
             System.out.println(pronosticos[i].devolverPronostico());
         }
     }
-    
-    
+
+
     //Agregar un pronostico
     public void addPronostico(Pronostico pron){
         if(numPronosticos < pronosticos.length){
@@ -62,14 +62,14 @@ public class Persona {
             System.out.println("No hay espacio para mas pronosticos");
         }
     }
-    
+
     //Calcular puntos
     public void contarPuntos(Ronda ronda){
         resultadoEnum resultLocal;
         for(int i=0;i<pronosticos.length;i++){
             //Genera un resultado para poder comparar con el pronostico
             resultLocal = ronda.getPartido(i).getResultado();
-            
+
             //Agarro el vector de pronosticos y comparo empate
             if(pronosticos[i].getResultado().isEmpate() == false){
                 //Si no hubo empate comparo el ganador
